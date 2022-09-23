@@ -24,9 +24,9 @@ public class FifteenNumbersPuzzle implements ActionListener{
         isMainClicked = false;
         frame = new JFrame("15 Numbers Puzzle");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(420,550);
+        frame.setSize(450,600);
+        frame.setResizable(false);
         
-    
 
         panel = new JPanel();
         panel.setBounds(50,100,300,300);
@@ -183,6 +183,9 @@ public class FifteenNumbersPuzzle implements ActionListener{
                 //numbers[i][j].setEnabled(false);
                 numbers[i][j].setBackground(Color.LIGHT_GRAY);
                 numbers[i][j].setFocusable(false);
+                Dimension dimensionsOfPanel = panel.getSize();
+            
+                numbers[i][j].setFont(new Font("Arial", Font.BOLD, 60));
                 panel.add(numbers[i][j]);
                 if(numbersArr[i][j]==0){
                     mainX = i;
