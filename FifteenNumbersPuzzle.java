@@ -7,8 +7,11 @@ public class FifteenNumbersPuzzle implements ActionListener{
     JFrame frame;
     JPanel panel;
     JButton[][] numbers = new JButton[4][4];
-    JButton button1,button2,button3,button4,button5,button6,button7,button8;
-    JButton button9,button10,button11,button12,button13,button14,button15,button16;
+    JTextArea moveCounter;
+    int numberOfMoves;
+    JTextArea timer;
+    JTextArea hint;
+    JTextArea solve;
 
     int mainX ;
     int mainY ;
@@ -24,19 +27,24 @@ public class FifteenNumbersPuzzle implements ActionListener{
         isMainClicked = false;
         frame = new JFrame("15 Numbers Puzzle");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(450,600);
+        frame.setSize(500,600);
         frame.setResizable(false);
         
 
         panel = new JPanel();
         panel.setBounds(50,100,300,300);
-        panel.setLayout(new GridLayout(4,4,10,10));
+        panel.setLayout(new GridLayout(5,4,10,10));
         panel.setBackground(Color.black);
 
         numbersArr = new int[4][4];
         for(int i = 0; i < 16; i++){
             numbersArr[i/4][i%4] = arr[i];
         }
+
+        moveCounter = new JTextArea();
+        timer = new JTextArea();
+        hint = new JTextArea();
+        solve = new JTextArea();
 
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 4 ; j++){
@@ -61,7 +69,87 @@ public class FifteenNumbersPuzzle implements ActionListener{
         return true;
     }
 
-    
+    public void setPuzzle(){
+
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4 ; j++){
+                numbers[i][j].setText(String.valueOf(numbersArr[i][j]));
+                numbers[i][j].setForeground(Color.black);
+                //numbers[i][j].setEnabled(false);
+                numbers[i][j].setBackground(Color.LIGHT_GRAY);
+                numbers[i][j].setFocusable(false);
+            
+                numbers[i][j].setFont(new Font("Arial", Font.BOLD, 60));
+                panel.add(numbers[i][j]);
+                if(numbersArr[i][j]==0){
+                    mainX = i;
+                    mainY = j;
+                    numbers[i][j].setText("");
+                }
+            }
+        }
+        moveCounter.setText(String.format("%6s \n %5d", "Count" , numberOfMoves));
+        moveCounter.setEditable(false);
+        moveCounter.setForeground(Color.black);
+        moveCounter.setBackground(Color.LIGHT_GRAY);
+        moveCounter.setFocusable(false);
+        moveCounter.setFont(new Font("Arial", Font.BOLD, 30));
+
+        timer.setText("  Timer\n  00:00");
+        timer.setEditable(false);
+        timer.setForeground(Color.black);
+        timer.setBackground(Color.LIGHT_GRAY);
+        timer.setFocusable(false);
+        timer.setFont(new Font("Arial", Font.BOLD, 30));
+
+        hint.setText("\n   Hint");
+        hint.setEditable(false);
+        hint.setForeground(Color.black);
+        hint.setBackground(Color.LIGHT_GRAY);
+        hint.setFocusable(false);
+        hint.setFont(new Font("Arial", Font.BOLD, 30));
+
+        solve.setText("\n  Solve");
+        solve.setEditable(false);
+        solve.setForeground(Color.black);
+        solve.setBackground(Color.LIGHT_GRAY);
+        solve.setFocusable(false);
+        solve.setFont(new Font("Arial", Font.BOLD, 30));
+
+        panel.add(moveCounter);
+        panel.add(timer);
+        panel.add(hint);
+        panel.add(solve);
+        
+        setMain();
+
+        if(isComplete()){
+            
+            
+
+            Font myFont = new Font("Ink Free",Font.BOLD,30);
+            JTextField winText = new JTextField("Congratulations");
+            winText.setFont(myFont);
+            frame.remove(panel);
+            frame.add(winText);
+            winText.setVisible(true);
+
+        }
+        
+    }
+
+
+    public void setMain(){
+        numbers[mainX][mainY].setEnabled(true);
+        numbers[mainX][mainY].setBackground(Color.blue);
+        numbers[mainX][mainY].addActionListener(this);
+    }
+
+    ALLeft AlLeft = new ALLeft();
+    ALRight AlRight = new ALRight();
+    ALUp AlUp = new ALUp();
+    ALDown AlDown = new ALDown();
+
 
     public class ALLeft implements ActionListener{
 
@@ -83,6 +171,8 @@ public class FifteenNumbersPuzzle implements ActionListener{
             if(mainY <= 2){
                 numbers[mainX][mainY+1].removeActionListener(AlRight);
             }
+            numberOfMoves++;
+
 
             setPuzzle();
         }
@@ -110,6 +200,8 @@ public class FifteenNumbersPuzzle implements ActionListener{
             if(mainY >= 1){
                 numbers[mainX][mainY-1].removeActionListener(AlLeft);
             }
+            numberOfMoves++;
+
 
             setPuzzle();
         }
@@ -135,6 +227,8 @@ public class FifteenNumbersPuzzle implements ActionListener{
             if(mainY <= 2){
                 numbers[mainX][mainY+1].removeActionListener(AlRight);
             }
+            numberOfMoves++;
+
 
             setPuzzle();
         }
@@ -160,64 +254,13 @@ public class FifteenNumbersPuzzle implements ActionListener{
             if(mainY <= 2){
                 numbers[mainX][mainY+1].removeActionListener(AlRight);
             }
+            numberOfMoves++;
+
 
             setPuzzle();
         }
         
     }
-
-    ALLeft AlLeft = new ALLeft();
-    ALRight AlRight = new ALRight();
-    ALUp AlUp = new ALUp();
-    ALDown AlDown = new ALDown();
-
-
-    
-
-    public void setPuzzle(){
-
-        for(int i = 0; i < 4; i++){
-            for(int j = 0; j < 4 ; j++){
-                numbers[i][j].setText(String.valueOf(numbersArr[i][j]));
-                numbers[i][j].setForeground(Color.black);
-                //numbers[i][j].setEnabled(false);
-                numbers[i][j].setBackground(Color.LIGHT_GRAY);
-                numbers[i][j].setFocusable(false);
-                Dimension dimensionsOfPanel = panel.getSize();
-            
-                numbers[i][j].setFont(new Font("Arial", Font.BOLD, 60));
-                panel.add(numbers[i][j]);
-                if(numbersArr[i][j]==0){
-                    mainX = i;
-                    mainY = j;
-                    numbers[i][j].setText("");
-                }
-            }
-        }
-        setMain();
-
-        if(isComplete()){
-            
-            
-
-            Font myFont = new Font("Ink Free",Font.BOLD,30);
-            JTextField winText = new JTextField("Tebrikler");
-            winText.setFont(myFont);
-            frame.remove(panel);
-            frame.add(winText);
-            winText.setVisible(true);
-
-        }
-        
-    }
-
-
-    public void setMain(){
-        numbers[mainX][mainY].setEnabled(true);
-        numbers[mainX][mainY].setBackground(Color.blue);
-        numbers[mainX][mainY].addActionListener(this);
-    }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
