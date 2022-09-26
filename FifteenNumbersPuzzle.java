@@ -7,11 +7,14 @@ public class FifteenNumbersPuzzle implements ActionListener{
     JFrame frame;
     JPanel panel;
     JButton[][] numbers = new JButton[4][4];
-    JTextArea moveCounter;
+    JTextField moveCounter;
     int numberOfMoves;
-    JTextArea timer;
-    JTextArea hint;
-    JTextArea solve;
+    JTextField timerText;
+    Timer timer;
+    int minute;
+    int second;
+    JTextField hint;
+    JTextField solve;
 
     int mainX ;
     int mainY ;
@@ -21,6 +24,33 @@ public class FifteenNumbersPuzzle implements ActionListener{
     int newMainY;
 
     int[][] numbersArr;
+
+    public void simpleTimer(){
+        timer = new Timer(1000, new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                second++;
+                if(second == 60){
+                    minute++;
+                    second = 0;
+                }
+
+                if(minute < 9 && second < 10){
+                    timerText.setText("0" + minute + ":0" + second); 
+                }else if(minute < 9 && second > 9){
+                    timerText.setText("0" + minute + ":" + second); 
+                }else if(minute > 9 && second < 10){
+                    timerText.setText(minute + ":0" + second); 
+                }else{
+                    timerText.setText(minute + ":" + second);
+                }
+
+            }
+
+        });
+    }
 
     public FifteenNumbersPuzzle(int[] arr){
         
@@ -41,10 +71,10 @@ public class FifteenNumbersPuzzle implements ActionListener{
             numbersArr[i/4][i%4] = arr[i];
         }
 
-        moveCounter = new JTextArea();
-        timer = new JTextArea();
-        hint = new JTextArea();
-        solve = new JTextArea();
+        moveCounter = new JTextField();
+        timerText = new JTextField();
+        hint = new JTextField();
+        solve = new JTextField();
 
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 4 ; j++){
@@ -52,12 +82,54 @@ public class FifteenNumbersPuzzle implements ActionListener{
                 //numbers[i][j].setEnabled(false);
             }
         }
+        
+        moveCounter.setHorizontalAlignment(JTextField.CENTER);
+        moveCounter.setEditable(false);
+        moveCounter.setForeground(Color.black);
+        moveCounter.setBackground(Color.LIGHT_GRAY);
+        moveCounter.setFocusable(false);
+        moveCounter.setFont(new Font("Arial", Font.BOLD, 20));
+
+        timerText.setText("00:00");
+        timerText.setHorizontalAlignment(JTextField.CENTER);
+        timerText.setEditable(false);
+        timerText.setForeground(Color.black);
+        timerText.setBackground(Color.LIGHT_GRAY);
+        timerText.setFocusable(false);
+        timerText.setFont(new Font("Arial", Font.BOLD, 30));
+
+        hint.setHorizontalAlignment(JTextField.CENTER);
+        hint.setText("Hint");
+        hint.setEditable(false);
+        hint.setForeground(Color.black);
+        hint.setBackground(Color.LIGHT_GRAY);
+        hint.setFocusable(false);
+        hint.setFont(new Font("Arial", Font.BOLD, 30));
+
+        solve.setHorizontalAlignment(JTextField.CENTER);
+        solve.setText("Solve");
+        solve.setEditable(false);
+        solve.setForeground(Color.black);
+        solve.setBackground(Color.LIGHT_GRAY);
+        solve.setFocusable(false);
+        solve.setFont(new Font("Arial", Font.BOLD, 30));
+
+        panel.add(moveCounter);
+        panel.add(timerText);
+        panel.add(hint);
+        panel.add(solve);
 
         setPuzzle();
         
-
+        
+        
         frame.add(panel);
         frame.setVisible(true);
+
+        minute = 0;
+        second = 0;
+        simpleTimer();
+        timer.start();
     }
 
     public boolean isComplete(){
@@ -87,39 +159,11 @@ public class FifteenNumbersPuzzle implements ActionListener{
                     numbers[i][j].setText("");
                 }
             }
+        
         }
-        moveCounter.setText(String.format("%6s \n %5d", "Count" , numberOfMoves));
-        moveCounter.setEditable(false);
-        moveCounter.setForeground(Color.black);
-        moveCounter.setBackground(Color.LIGHT_GRAY);
-        moveCounter.setFocusable(false);
-        moveCounter.setFont(new Font("Arial", Font.BOLD, 30));
-
-        timer.setText("  Timer\n  00:00");
-        timer.setEditable(false);
-        timer.setForeground(Color.black);
-        timer.setBackground(Color.LIGHT_GRAY);
-        timer.setFocusable(false);
-        timer.setFont(new Font("Arial", Font.BOLD, 30));
-
-        hint.setText("\n   Hint");
-        hint.setEditable(false);
-        hint.setForeground(Color.black);
-        hint.setBackground(Color.LIGHT_GRAY);
-        hint.setFocusable(false);
-        hint.setFont(new Font("Arial", Font.BOLD, 30));
-
-        solve.setText("\n  Solve");
-        solve.setEditable(false);
-        solve.setForeground(Color.black);
-        solve.setBackground(Color.LIGHT_GRAY);
-        solve.setFocusable(false);
-        solve.setFont(new Font("Arial", Font.BOLD, 30));
-
-        panel.add(moveCounter);
-        panel.add(timer);
-        panel.add(hint);
-        panel.add(solve);
+        
+        moveCounter.setText("Count:" + numberOfMoves);
+        
         
         setMain();
 
@@ -149,7 +193,6 @@ public class FifteenNumbersPuzzle implements ActionListener{
     ALRight AlRight = new ALRight();
     ALUp AlUp = new ALUp();
     ALDown AlDown = new ALDown();
-
 
     public class ALLeft implements ActionListener{
 
