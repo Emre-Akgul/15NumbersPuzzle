@@ -4,6 +4,8 @@ import javax.swing.*;
 
 public class FifteenNumbersPuzzle implements ActionListener{
     
+    Board board;
+
     JFrame frame;
     JPanel panel;
     JButton[][] numbers = new JButton[4][4];
