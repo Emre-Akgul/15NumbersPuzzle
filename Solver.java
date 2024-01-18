@@ -1,69 +1,90 @@
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
-import java.util.TreeMap;
 
 public class Solver {
-    Board board;
-    TreeMap<Board,Boolean> explored;
-    // find a solution to the initial board (using the A* algorithm)
-    public Solver(Board board){
-        this.board = board; 
-        explored = new TreeMap<>();
+    private Board initialBoard;
+    private HashMap<Board, Board> predecessorMap; // Map to store each board's predecessor
+
+    // Constructor
+    public Solver(Board initialBoard){
+        this.initialBoard = initialBoard;
+        predecessorMap = new HashMap<>();
+        predecessorMap.put(initialBoard, null); // Initial board has no predecessor
     }
 
-    // min number of moves to solve initial board
-    public int moves(){
-        return 0 ;
+    // Reconstruct the solution path
+    private LinkedList<Board> reconstructPath(Board goalBoard){
+        LinkedList<Board> path = new LinkedList<>();
+        for(Board board = goalBoard; board != null; board = predecessorMap.get(board)){
+            path.addFirst(board); // Add board to the beginning of the list
+        }
+        return path;
     }
 
-    // sequence of boards in a shortest solution
+    // Solve the puzzle using the A* algorithm
     public Iterable<Board> solution(){
-        LinkedList<Board> solution = new LinkedList<Board>();
         PriorityQueue<Board> pq = new PriorityQueue<>();
-        pq.add(board);
-        explored.put(board, true);
+        pq.add(initialBoard);
 
-        boolean isReached = false;
-        Board current;
+        while(!pq.isEmpty()){
+            Board currentBoard = pq.poll();
 
-        while(!pq.isEmpty() && !isReached){
-            current = pq.poll();
-            if(current.numberOfMoves > 19){
-                System.out.println(current);
-            }                
+            // Check if current board is the goal
+            if(currentBoard.isGoal()){
+                return reconstructPath(currentBoard);
+            }
 
-            if(current.isGoal()){
-                isReached  = true;
-            }else{
-                Iterable<Board> neighbors = current.neighbors();
-                for(Board b : neighbors){
-                    if(!explored.containsKey(b)){
-                        explored.put(b, true);
-                        pq.add(b);
-                    }
+            // Process neighboring boards
+            for(Board neighbor : currentBoard.neighbors()){
+                if(!predecessorMap.containsKey(neighbor)){
+                    predecessorMap.put(neighbor, currentBoard); // Set current board as predecessor of neighbor
+                    pq.add(neighbor);
                 }
             }
         }
-        System.out.println(isReached);
-        System.out.println("Solved");
-        return solution;
 
+        // Return an empty path if the goal is not reachable
+        return new LinkedList<>();
     }
 
-    // test client (see below) 
     public static void main(String[] args){
+        // Define an initial puzzle configuration
+        
+        
+        int[][] initialTiles = {
+            {1, 2, 3, 4},
+            {5, 6, 7, 8},
+            {9, 10, 11, 12},
+            {13, 14, 0, 15}
+        };
 
-        int[][] puzzle2 = {{1,2,3,4},{5,6,7,8},{11,10,9,12},{15,14,13,0}};
-        Board board2 = new Board(puzzle2,15,0);
-        Solver solver = new Solver(board2);
+        int[][] solvable2 = {
+            {13,2,10,3},
+            {1,12,8,4},
+            {5,9,6,7},
+            {15,14,11,0}};
 
-        Iterable<Board> solution = solver.solution();
-        for(Board b : solution){
-            System.out.println(b);
+        // Create the initial board
+        Board initialBoard = new Board(solvable2, 15,0);
+    
+        // Instantiate the solver with the initial board
+        Solver solver = new Solver(initialBoard);
+    
+        // Solve the puzzle and get the solution path
+        Iterable<Board> solutionPath = solver.solution();
+    
+        // Print the solution path
+        System.out.println("Solution Path:");
+        int stepCount = 0;
+        for (Board board : solutionPath) {
+            System.out.println("Step " + stepCount + ":");
+            System.out.println(board); // Print the board state
+            stepCount++;
         }
+    
+        // Print the total number of moves
+        System.out.println("Total number of moves: " + (stepCount - 1));
     }
-
-
-
+    
 }

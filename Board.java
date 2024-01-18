@@ -1,7 +1,7 @@
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class Board implements Comparable<Board>{
-    
     int[] puzzle;
     int n;
     int zeroLoc;
@@ -74,12 +74,12 @@ public class Board implements Comparable<Board>{
         return n;
     }
 
-    // number of tiles out of place
-    public int hamming(){
+    public int hamming() {
         int res = 0;
-        for(int i = 0; i < getSize(); i++){
-            for(int j = 0; j < getSize(); j++){
-                if(i * getSize() + j != tileAt(i, j) - 1){
+        for (int i = 0; i < getSize(); i++) {
+            for (int j = 0; j < getSize(); j++) {
+                int tile = tileAt(i, j);
+                if (tile != 0 && tile != (i * getSize() + j + 1)) {
                     res++;
                 }
             }
@@ -94,12 +94,10 @@ public class Board implements Comparable<Board>{
         int coef = 1;
         for(int i = 0; i < getSize(); i++){
             for(int j = 0; j < getSize(); j++){
-                
                 num = tileAt(i, j) - 1;
                 if(num >= 0){
                     res += coef * (Math.abs(num / getSize() - i) + Math.abs(num % getSize() - j));
                 }
-                
             }
         }
         return res;
@@ -111,22 +109,22 @@ public class Board implements Comparable<Board>{
     }
 
     // does this board equal y?
-    public boolean equals(Board other){
-
-        for(int i = 0; i < getSize(); i++){
-            for(int j = 0; j < getSize(); j++){
-                if(other.puzzle[i * n + j] != this.puzzle[i * n + j]){
-                    return false;
-                }
-            }
-        }
-        return true;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Board)) return false;
+        Board board = (Board) o;
+        return Arrays.equals(puzzle, board.puzzle);
     }
 
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(puzzle);
+    }
+    
     // all neighboring boards
     public Iterable<Board> neighbors(){
         LinkedList<Board> neighbors = new LinkedList<>();
-    
+
         if(zeroLoc / getSize() > 0 && zeroLoc / getSize() < getSize() - 1 && zeroLoc % 4 > 0 && zeroLoc % 4 < getSize() - 1){
             neighbors.add(new Board(this,'l'));
             neighbors.add(new Board(this,'r'));
@@ -162,20 +160,17 @@ public class Board implements Comparable<Board>{
             neighbors.add(new Board(this,'d'));
         }
 
-        
         return neighbors;
     }
 
     // is this board solvable?
     public boolean isSolvable(){
         return false;
-    }   
+    }
 
     @Override
     public int compareTo(Board o) {
-        
         return this.manhattan() + numberOfMoves - o.manhattan() - o.numberOfMoves;
-
     }
 
      // unit testing (required)
