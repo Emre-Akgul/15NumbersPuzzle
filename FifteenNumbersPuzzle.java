@@ -5,22 +5,6 @@ import java.util.List;
 
 public class FifteenNumbersPuzzle implements ActionListener{
 
-
-
-    public class CustomButton extends JButton {
-        public CustomButton(String text) {
-            super(text);
-            // Ensure the look for the "disabled" state is the same as "enabled"
-            this.setDisabledTextColor(this.getForeground());
-            // If needed, you can also set the background, font, etc., here
-        }
-
-        // Optionally, you can override other appearance settings here
-    }
-
-    
-    
-    
     Board board;
 
     JFrame frame;
@@ -49,7 +33,6 @@ public class FifteenNumbersPuzzle implements ActionListener{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                
                 second++;
                 if(second == 60){
                     minute++;
@@ -71,12 +54,17 @@ public class FifteenNumbersPuzzle implements ActionListener{
         });
     }
 
+    private void showCongratulationsMessage() {
+
+        JOptionPane.showMessageDialog(frame, "Congratulations! You've solved the puzzle!", "Puzzle Solved", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     public FifteenNumbersPuzzle(int[] arr){
         
         isMainClicked = false;
         frame = new JFrame("15 Numbers Puzzle");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500,600);
+        frame.setSize(600,700);
         frame.setResizable(false);
         
 
@@ -97,7 +85,7 @@ public class FifteenNumbersPuzzle implements ActionListener{
 
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 4 ; j++){
-                numbers[i][j] = new CustomButton("")
+                numbers[i][j] = new JButton();
                 //numbers[i][j].setEnabled(false);
             }
         }
@@ -152,12 +140,13 @@ public class FifteenNumbersPuzzle implements ActionListener{
         timer.start();
     }
 
-    public boolean isComplete(){
-        for(int i = 0; i < 15 ; i++){
-            if(numbersArr[i/4][i%4] != i+1){
+    public boolean isComplete() {
+        for (int i = 0; i < 15; i++) {
+            if (numbersArr[i / 4][i % 4] != i + 1) {
                 return false;
             }
         }
+        showCongratulationsMessage();
         return true;
     }
 
@@ -399,11 +388,20 @@ public class FifteenNumbersPuzzle implements ActionListener{
                     // Update GUI with the latest board state
                     Board latestBoard = chunks.get(chunks.size() - 1);
                     updateGUIBoard(latestBoard);
+
+                    // Increment move counter and update display
+                    numberOfMoves++;
+                    moveCounter.setText("Count: " + numberOfMoves);
                 }
     
                 @Override
                 protected void done() {
-                    // Re-enable the solve button (if needed)
+                    // Stop the timer
+                    if (timer != null) {
+                        timer.stop();
+                    }
+
+                    // Re-enable the solve button
                     solve.setEnabled(true);
                 }
             };

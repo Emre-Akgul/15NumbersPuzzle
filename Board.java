@@ -163,9 +163,31 @@ public class Board implements Comparable<Board>{
         return neighbors;
     }
 
-    // is this board solvable?
-    public boolean isSolvable(){
-        return false;
+    public boolean isSolvable() {
+        int inversions = getInversionCount();
+        int blankRowFromBottom = n - (zeroLoc / n);
+
+        if (n % 2 == 1) {
+            // For odd-sized grids, the number of inversions must be even
+            return inversions % 2 == 0;
+        } else {
+            // For even-sized grids, the parity of inversions must be opposite
+            // to the row number (from bottom) of the blank tile
+            return (inversions % 2 == 0) == (blankRowFromBottom % 2 == 1);
+        }
+    }
+
+    private int getInversionCount() {
+        int inversions = 0;
+        for (int i = 0; i < puzzle.length - 1; i++) {
+            if (puzzle[i] == 0) continue; // Skip the blank tile
+            for (int j = i + 1; j < puzzle.length; j++) {
+                if (puzzle[j] != 0 && puzzle[i] > puzzle[j]) {
+                    inversions++;
+                }
+            }
+        }
+        return inversions;
     }
 
     @Override
