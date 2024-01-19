@@ -50,8 +50,6 @@ public class Solver {
 
     public static void main(String[] args){
         // Define an initial puzzle configuration
-        
-        
         int[][] initialTiles = {
             {1, 2, 3, 4},
             {5, 6, 7, 8},

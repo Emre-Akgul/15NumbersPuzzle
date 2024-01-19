@@ -1,8 +1,25 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.List;
 
 public class FifteenNumbersPuzzle implements ActionListener{
+
+
+
+    public class CustomButton extends JButton {
+        public CustomButton(String text) {
+            super(text);
+            // Ensure the look for the "disabled" state is the same as "enabled"
+            this.setDisabledTextColor(this.getForeground());
+            // If needed, you can also set the background, font, etc., here
+        }
+
+        // Optionally, you can override other appearance settings here
+    }
+
+    
+    
     
     Board board;
 
@@ -16,7 +33,7 @@ public class FifteenNumbersPuzzle implements ActionListener{
     int minute;
     int second;
     JTextField hint;
-    JTextField solve;
+    JButton solve;
 
     int mainX ;
     int mainY ;
@@ -76,11 +93,11 @@ public class FifteenNumbersPuzzle implements ActionListener{
         moveCounter = new JTextField();
         timerText = new JTextField();
         hint = new JTextField();
-        solve = new JTextField();
+        solve = new JButton("Solve");
 
         for(int i = 0; i < 4; i++){
             for(int j = 0; j < 4 ; j++){
-                numbers[i][j] = new JButton();
+                numbers[i][j] = new CustomButton("")
                 //numbers[i][j].setEnabled(false);
             }
         }
@@ -110,11 +127,12 @@ public class FifteenNumbersPuzzle implements ActionListener{
 
         solve.setHorizontalAlignment(JTextField.CENTER);
         solve.setText("Solve");
-        solve.setEditable(false);
         solve.setForeground(Color.black);
         solve.setBackground(Color.LIGHT_GRAY);
         solve.setFocusable(false);
         solve.setFont(new Font("Arial", Font.BOLD, 30));
+
+        solve.addActionListener(new SolveAction());
 
         panel.add(moveCounter);
         panel.add(timerText);
@@ -189,6 +207,7 @@ public class FifteenNumbersPuzzle implements ActionListener{
         numbers[mainX][mainY].setEnabled(true);
         numbers[mainX][mainY].setBackground(Color.blue);
         numbers[mainX][mainY].addActionListener(this);
+        
     }
 
     ALLeft AlLeft = new ALLeft();
@@ -336,4 +355,95 @@ public class FifteenNumbersPuzzle implements ActionListener{
         }
     }
 
+
+    public class SolveAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Disable all buttons to prevent user interaction
+            disableAllButtons();
+    
+            // Convert the current GUI board state to a 2D array
+            int[][] tiles = new int[4][4];
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    tiles[i][j] = numbersArr[i][j];
+                }
+            }
+    
+            // Find the zero location
+            int zeroLoc = findZeroLocation(tiles);
+    
+            // Create a new board
+            Board initialBoard = new Board(tiles, zeroLoc, 0);
+    
+            // Run the solving process in a background thread
+            SwingWorker<Void, Board> worker = new SwingWorker<>() {
+                @Override
+                protected Void doInBackground() throws Exception {
+                    // Instantiate the solver with the initial board
+                    Solver solver = new Solver(initialBoard);
+        
+                    // Solve the puzzle and get the solution path
+                    Iterable<Board> solutionPath = solver.solution();
+    
+                    // Publish each step of the solution
+                    for (Board board : solutionPath) {
+                        publish(board);
+                        Thread.sleep(500); // Delay to visualize each move
+                    }
+                    return null;
+                }
+    
+                @Override
+                protected void process(List<Board> chunks) {
+                    // Update GUI with the latest board state
+                    Board latestBoard = chunks.get(chunks.size() - 1);
+                    updateGUIBoard(latestBoard);
+                }
+    
+                @Override
+                protected void done() {
+                    // Re-enable the solve button (if needed)
+                    solve.setEnabled(true);
+                }
+            };
+    
+            worker.execute();
+        }
+    
+        private int findZeroLocation(int[][] tiles) {
+            for (int i = 0; i < tiles.length; i++) {
+                for (int j = 0; j < tiles[i].length; j++) {
+                    if (tiles[i][j] == 0) {
+                        return i * 4 + j;
+                    }
+                }
+            }
+            return -1; // Not found
+        }
+    
+        private void disableAllButtons() {
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    numbers[i][j].setEnabled(false);
+                }
+            }
+            solve.setEnabled(false);
+        }
+    
+        private void updateGUIBoard(Board board) {
+            // Logic to update numbersArr and call setPuzzle based on the board state
+            // Extract the puzzle array from the board object
+            int[] puzzle = board.getPuzzle(); // Assuming getPuzzle() method exists in Board class
+    
+            // Update numbersArr and refresh the GUI
+            for (int i = 0; i < 4; i++) {
+                for (int j = 0; j < 4; j++) {
+                    numbersArr[i][j] = puzzle[i * 4 + j];
+                }
+            }
+            setPuzzle();
+        }
+    }
+    
 }

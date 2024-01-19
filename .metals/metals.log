@@ -1,0 +1,50 @@
+2024.01.19 02:55:41 INFO  Started: Metals version 1.2.0 in folders 'C:\Users\90541\Documents\15NumbersPuzzle' for client Visual Studio Code 1.85.1.
+2024.01.19 02:55:43 WARN  Build server is not auto-connectable.
+2024.01.19 02:55:43 WARN  no build tool detected in workspace 'C:\Users\90541\Documents\15NumbersPuzzle'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. 
+2024.01.19 02:55:43 WARN  no build target for: C:\Users\90541\Documents\15NumbersPuzzle\FifteenNumbersPuzzle.java
+2024.01.19 02:55:43 WARN  no build target for: C:\Users\90541\Documents\15NumbersPuzzle\Program.java
+2024.01.19 02:55:43 WARN  no build target for: C:\Users\90541\Documents\15NumbersPuzzle\Board.java
+2024.01.19 02:55:43 WARN  no build target for: C:\Users\90541\Documents\15NumbersPuzzle\Solver.java
+2024.01.19 02:55:52 INFO  no build target found for C:\Users\90541\Documents\15NumbersPuzzle\Program.java. Using presentation compiler with project's scala-library version: 3.3.1
+Jan 19, 2024 2:55:54 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-55-54-405.md
+Jan 19, 2024 2:55:55 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-55-55-189.md
+Jan 19, 2024 2:56:01 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-56-01-308.md
+Jan 19, 2024 2:56:56 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-56-56-604.md
+Jan 19, 2024 2:57:04 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-57-04-659.md
+2024.01.19 02:57:04 INFO  time: code lens generation in 1.3s
+Jan 19, 2024 2:57:14 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-57-14-924.md
+Jan 19, 2024 2:57:16 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-57-16-013.md
+2024.01.19 02:57:16 INFO  time: code lens generation in 1.47s
+Jan 19, 2024 2:57:16 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 22
+Jan 19, 2024 2:57:16 AM org.eclipse.lsp4j.jsonrpc.RemoteEndpoint handleCancellation
+WARNING: Unmatched cancel notification for request id 25
+Jan 19, 2024 2:57:17 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-57-17-222.md
+2024.01.19 02:57:17 INFO  time: code lens generation in 1.12s
+Jan 19, 2024 2:57:17 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-57-17-748.md
+Jan 19, 2024 2:57:26 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-57-26-171.md
+2024.01.19 02:57:26 WARN  no build target for: C:\Users\90541\Documents\15NumbersPuzzle\FifteenNumbersPuzzle.java
+Jan 19, 2024 2:57:27 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-57-27-197.md
+Jan 19, 2024 2:57:28 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-57-28-712.md
+Jan 19, 2024 2:57:40 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-57-40-579.md
+Jan 19, 2024 2:57:47 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-57-47-789.md
+2024.01.19 02:58:05 WARN  no build target for: C:\Users\90541\Documents\15NumbersPuzzle\FifteenNumbersPuzzle.java
+Jan 19, 2024 2:58:05 AM scala.meta.internal.pc.CompilerAccess handleError
+SEVERE: A severe compiler error occurred, full details of the error can be found in the error report C:\Users\90541\Documents\15NumbersPuzzle\.metals\.reports\metals-full\2024-01-19\r_compiler-error_02-58-05-560.md
+2024.01.19 02:58:06 INFO  Shutting down server
+2024.01.19 02:58:06 INFO  shutting down Metals
+2024.01.19 02:58:06 INFO  Exiting server

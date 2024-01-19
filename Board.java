@@ -120,7 +120,7 @@ public class Board implements Comparable<Board>{
     public int hashCode() {
         return Arrays.hashCode(puzzle);
     }
-    
+
     // all neighboring boards
     public Iterable<Board> neighbors(){
         LinkedList<Board> neighbors = new LinkedList<>();
@@ -171,6 +171,11 @@ public class Board implements Comparable<Board>{
     @Override
     public int compareTo(Board o) {
         return this.manhattan() + numberOfMoves - o.manhattan() - o.numberOfMoves;
+    }
+
+    // Method to get a copy of the puzzle array
+    public int[] getPuzzle() {
+        return Arrays.copyOf(puzzle, puzzle.length);
     }
 
      // unit testing (required)
