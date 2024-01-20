@@ -16,7 +16,7 @@ public class FifteenNumbersPuzzle implements ActionListener{
     Timer timer;
     int minute;
     int second;
-    JTextField hint;
+    JButton hintButton;
     JButton solve;
 
     int mainX ;
@@ -27,6 +27,7 @@ public class FifteenNumbersPuzzle implements ActionListener{
     int newMainY;
 
     int[][] numbersArr;
+    HintCreator hintCreator;
 
     public void simpleTimer(){
         timer = new Timer(1000, new ActionListener(){
@@ -52,6 +53,21 @@ public class FifteenNumbersPuzzle implements ActionListener{
             }
 
         });
+    }
+
+    private void displayHint(int[][] numbersArr) {
+        // Convert the 2D array to a 1D array
+        int[] currentBoard = new int[16];
+        for (int i = 0; i < 16; i++) {
+            currentBoard[i] = numbersArr[i / 4][i % 4];
+        }
+
+        // Initialize the HintCreator with the current board state
+        hintCreator = new HintCreator(currentBoard);
+
+        // Get the hint from the HintCreator and show it in a dialog box
+        String hintMessage = hintCreator.getHint();
+        JOptionPane.showMessageDialog(frame, hintMessage, "Hint", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void showCongratulationsMessage() {
@@ -80,7 +96,8 @@ public class FifteenNumbersPuzzle implements ActionListener{
 
         moveCounter = new JTextField();
         timerText = new JTextField();
-        hint = new JTextField();
+        
+        hintButton = new JButton("Hint");
         solve = new JButton("Solve");
 
         for(int i = 0; i < 4; i++){
@@ -105,13 +122,12 @@ public class FifteenNumbersPuzzle implements ActionListener{
         timerText.setFocusable(false);
         timerText.setFont(new Font("Arial", Font.BOLD, 30));
 
-        hint.setHorizontalAlignment(JTextField.CENTER);
-        hint.setText("Hint");
-        hint.setEditable(false);
-        hint.setForeground(Color.black);
-        hint.setBackground(Color.LIGHT_GRAY);
-        hint.setFocusable(false);
-        hint.setFont(new Font("Arial", Font.BOLD, 30));
+        hintButton.setForeground(Color.black);
+        hintButton.setBackground(Color.LIGHT_GRAY);
+        hintButton.setFocusable(false);
+        hintButton.setFont(new Font("Arial", Font.BOLD, 30));
+        hintButton.addActionListener(e -> displayHint(numbersArr)); // Pass the current board state
+        panel.add(hintButton);
 
         solve.setHorizontalAlignment(JTextField.CENTER);
         solve.setText("Solve");
@@ -124,7 +140,7 @@ public class FifteenNumbersPuzzle implements ActionListener{
 
         panel.add(moveCounter);
         panel.add(timerText);
-        panel.add(hint);
+        panel.add(hintButton);
         panel.add(solve);
 
         setPuzzle();
@@ -168,7 +184,6 @@ public class FifteenNumbersPuzzle implements ActionListener{
                     numbers[i][j].setText("");
                 }
             }
-        
         }
         
         moveCounter.setText("Count:" + numberOfMoves);
@@ -308,7 +323,6 @@ public class FifteenNumbersPuzzle implements ActionListener{
                 numbers[mainX][mainY+1].removeActionListener(AlRight);
             }
             numberOfMoves++;
-
 
             setPuzzle();
         }
