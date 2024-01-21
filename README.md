@@ -62,7 +62,10 @@ Commit your changes and push to your branch.
 Submit a pull request.
 
 
-## Contact
-For any queries or suggestions, feel free to contact me on 
-[LinkedIn](https://www.linkedin.com/in/akgulemre/).
-[Mail](emreakgulcs@gmail.com)
+## Contact Information
+For any queries or suggestions, feel free to reach out through the following channels:
+
+LinkedIn: Emre Akgul's LinkedIn Profile
+
+Email: emreakgulcs@gmail.com
+
