@@ -63,4 +63,6 @@ Submit a pull request.
 
 
 ## Contact
-For any queries or suggestions, feel free to contact me on [LinkedIn](https://www.linkedin.com/in/akgulemre/).
+For any queries or suggestions, feel free to contact me on 
+[LinkedIn](https://www.linkedin.com/in/akgulemre/).
+[Mail](emreakgulcs@gmail.com)
