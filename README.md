@@ -65,7 +65,7 @@ Submit a pull request.
 ## Contact Information
 For any queries or suggestions, feel free to reach out through the following channels:
 
-LinkedIn: Emre Akgul's LinkedIn Profile
+LinkedIn: [Emre Akgul's LinkedIn Profile](https://www.linkedin.com/in/akgulemre/).
 
 Email: emreakgulcs@gmail.com
 
