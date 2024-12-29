@@ -2,6 +2,10 @@
 ## Introduction
 The Fifteen Numbers Puzzle Game is a Java-based implementation of the classic sliding puzzle game. This project includes the puzzle game, a board generator, and a solver using the A* algorithm. The game is visualized using Java Swing, providing an interactive and user-friendly interface.
 
+## Demo Video
+
+[![Watch the video](https://img.youtube.com/vi/hsT5_4hQgYg/mqdefault.jpg)](https://youtu.be/hsT5_4hQgYg?si=C1gKJ8pI89VSyA7o)
+
 ## Features
 Interactive Puzzle Game: Play the 15-puzzle game with a graphical user interface.
 
